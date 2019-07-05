@@ -22,7 +22,7 @@ export enum TypeOfExtension {
 };
 
 export interface Input {
-    source: Uint8Array;
+    source: Buffer;
     extension: TypeOfExtension
 };
 
@@ -38,7 +38,7 @@ const executeAsync = (command: string) => {
     });
 };
 
-const writeFileAsnyc = (path: string, data: Uint8Array) => {
+const writeFileAsnyc = (path: string, data: Buffer) => {
     return new Promise((resolve, reject) => {
         fs.writeFile(path, data, error => {
             if (error) {

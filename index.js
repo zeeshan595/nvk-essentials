@@ -23,7 +23,15 @@ if (process.platform === `linux` || process.platform === `darwin`) {
 }
 let version = child_process_1.execSync(`${glslangPath} -v`).toString();
 ;
-const execute = (command) => {
+var TypeOfExtension;
+(function (TypeOfExtension) {
+    TypeOfExtension["frag"] = "frag";
+    TypeOfExtension["vert"] = "vert";
+    TypeOfExtension["comp"] = "comp";
+})(TypeOfExtension = exports.TypeOfExtension || (exports.TypeOfExtension = {}));
+;
+;
+const executeAsync = (command) => {
     return new Promise((resolve, reject) => {
         child_process_1.exec(command, (error, stdout) => {
             if (error) {
@@ -35,26 +43,62 @@ const execute = (command) => {
         });
     });
 };
-const compile = (source, destination) => __awaiter(this, void 0, void 0, function* () {
+const writeFileAsnyc = (path, data) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, data, error => {
+            if (error) {
+                reject(error);
+            }
+            else {
+                resolve();
+            }
+        });
+    });
+};
+const readFileAsync = (path) => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(path, (error, data) => {
+            if (error) {
+                reject(error);
+            }
+            else {
+                resolve(new Uint8Array(data));
+            }
+        });
+    });
+};
+const unlinkAsync = (path) => {
+    return new Promise((resolve, reject) => {
+        fs.unlink(path, error => {
+            if (error) {
+                reject(error);
+            }
+            else {
+                resolve();
+            }
+        });
+    });
+};
+const compileFile = (source, destination) => __awaiter(this, void 0, void 0, function* () {
     let data = {
         error: null
     };
-    const cmd = `${glslangPath} -V ${source} -o ${destination} -s`;
+    const cmd = `${glslangPath} -V ${source} -o ${destination}`;
     try {
-        data.message = yield execute(cmd).toString();
+        data.message = yield executeAsync(cmd).toString();
     }
     catch (e) {
         data.error = e;
     }
     return data;
 });
-const compileSync = (source, destination) => {
+const compileFileSync = (source, destination) => {
     let data = {
         error: null
     };
     const destinationDir = destination.substring(0, destination.lastIndexOf('/'));
     fs.mkdirSync(destinationDir, { recursive: true });
-    const cmd = `${glslangPath} -V ${source} -o ${destination} -s`;
+    const cmd = `${glslangPath} -V ${source} -o ${destination}`;
     try {
         data.message = child_process_1.execSync(cmd).toString();
     }
@@ -63,8 +107,48 @@ const compileSync = (source, destination) => {
     }
     return data;
 };
+const compile = (input) => __awaiter(this, void 0, void 0, function* () {
+    let data = {
+        error: null
+    };
+    const source = `${__dirname}/temp.${input.extension}`;
+    const destination = `${__dirname}/temp.spv`;
+    const cmd = `${glslangPath} -V ${source} -o ${destination}`;
+    try {
+        yield writeFileAsnyc(source, input.source);
+        data.message = yield executeAsync(cmd).toString();
+        data.output = yield readFileAsync(destination);
+        yield unlinkAsync(source);
+        yield unlinkAsync(destination);
+    }
+    catch (e) {
+        data.error = e;
+    }
+    return data;
+});
+const compileSync = (input) => {
+    let data = {
+        error: null
+    };
+    const source = `${__dirname}/temp.${input.extension}`;
+    const destination = `${__dirname}/temp.spv`;
+    const cmd = `${glslangPath} -V ${source} -o ${destination}`;
+    try {
+        fs.writeFileSync(source, input.source);
+        data.message = child_process_1.execSync(cmd).toString();
+        data.output = new Uint8Array(fs.readFileSync(destination));
+        fs.unlinkSync(source);
+        fs.unlinkSync(destination);
+    }
+    catch (e) {
+        data.error = e;
+    }
+    return data;
+};
 exports.default = {
     version,
+    compileFile,
+    compileFileSync,
     compile,
     compileSync
 };
