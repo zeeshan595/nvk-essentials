@@ -5,9 +5,22 @@ export interface Output {
     output?: Uint8Array;
 }
 export declare enum TypeOfExtension {
-    frag = "frag",
     vert = "vert",
-    comp = "comp"
+    tesc = "tesc",
+    tese = "tese",
+    geom = "geom",
+    frag = "frag",
+    comp = "comp",
+    mesh = "mesh",
+    task = "task",
+    rgen = "rgen",
+    rint = "rint",
+    rahit = "rahit",
+    rchit = "rchit",
+    rmiss = "rmiss",
+    rcall = "rcall",
+    glsl = "glsl",
+    hlsl = "hlsl"
 }
 export interface Input {
     source: Buffer;
