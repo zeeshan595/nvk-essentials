@@ -5,7 +5,9 @@
   "engines": {
     "node": ">= 10.9.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.0.12"
+  },
   "dependencies": {},
   "scripts": {
     "test": "node --experimental-modules tests/index.mjs"
