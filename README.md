@@ -1,5 +1,7 @@
 # nvk-essentials
 
+IMPORTANT: this is a fork of the original project, this is compatible with typescript
+
 This package contains tools to aid development with [nvk](https://github.com/maierfelix/nvk)
 
 ## Interface:
@@ -9,8 +11,8 @@ This package contains tools to aid development with [nvk](https://github.com/mai
 Contains pre-built binaries of `glslangValidator`.
 
 Examples:
-````js
-import { GLSL } from "nvk-essentials";
+````ts
+import GLSL from "nvk-essentials";
 `````
 
 #### GLSL.*version*
@@ -19,18 +21,18 @@ Returns a string of the equivalent `glslangValidator -v`
 
 Examples:
 
-````js
-let {version} = GLSL;
+````ts
+let { version } = GLSL;
 ````
 
-#### GLSL.*toSPIRV*
+#### GLSL.*compile*
 
 Returns the binary SPIR-V representation of the passed in GLSL source. This function expects an Object as it's first parameter in the following format:
 
-````js
+````ts
 {
-  source: <Buffer>,
-  extension: <String>
+  source: Buffer,
+  extension: String
 }
 ````
 
@@ -54,21 +56,21 @@ Available extensions are:
 
 Examples:
 
-````js
-let {output, error} = await GLSL.toSPIRV({
+````ts
+let {output, error} = await GLSL.compile({
   source: fs.readFileSync(`./shaders/object.vert`),
-  extension: `vert`
+  extension: TypeOfExtension.vert
 });
 ````
 
-#### GLSL.*toSPIRVSync*
+#### GLSL.*compileSyncync*
 
 Synchronous variant of `GLSL.toSPIRV` with an equal function signature.
 
 Examples:
 
-````js
-let {output, error} = GLSL.toSPIRVSync({
+````ts
+let {output, error} = GLSL.compileSync({
   source: fs.readFileSync(`./shaders/object.frag`),
   extension: `frag`
 });
