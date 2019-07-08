@@ -1,7 +1,7 @@
 {
-  "name": "nvk-essentials",
+  "name": "nvk-essentials-js",
   "main": "dist/index.js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "engines": {
     "node": ">= 10.9.0"
   },
@@ -11,12 +11,13 @@
   "dependencies": {},
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && node dist/tests/index.js"
+    "test": "npm run build && node dist/tests/index.js",
+    "prepublish": "npm run build"
   },
   "description": "Essential development tools for nvk",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zeeshan595/nvk-essentials.git"
+    "url": "git+https://github.com/zeeshan595/nvk-essentials-js.git"
   },
   "keywords": [
     "nvk",
@@ -28,7 +29,7 @@
   "author": "Zeeshan Abid",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zeeshan595/nvk-essentials/issues"
+    "url": "https://github.com/zeeshan595/nvk-essentials-js/issues"
   },
-  "homepage": "https://github.com/zeeshan595/nvk-essentials#readme"
+  "homepage": "https://github.com/zeeshan595/nvk-essentials-js#readme"
 }
