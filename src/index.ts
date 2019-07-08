@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { execSync, exec } from "child_process";
 
-let glslangPath = `${__dirname}/bin/${process.platform}/bin`;
+let glslangPath = `${__dirname}/../bin/${process.platform}/bin`;
 
 if (process.platform === `linux` || process.platform === `darwin`) {
     fs.chmodSync(glslangPath, 755);

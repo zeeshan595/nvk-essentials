@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import GLSL, { TypeOfExtension } from "../index";
 
-const vertexSrc = fs.readFileSync(`${__dirname}/shaders/basic.vert`);
-const fragmentSrc = fs.readFileSync(`${__dirname}/shaders/basic.frag`);
+const vertexSrc = fs.readFileSync(`${__dirname}/../../src/tests/shaders/basic.vert`);
+const fragmentSrc = fs.readFileSync(`${__dirname}/../../src/tests/shaders/basic.frag`);
 
 const errors = [];
 
