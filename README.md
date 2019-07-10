@@ -1,7 +1,5 @@
 # nvk-essentials
 
-IMPORTANT: this is a fork of the original project, this is compatible with typescript
-
 This package contains tools to aid development with [nvk](https://github.com/maierfelix/nvk)
 
 ## Interface:
