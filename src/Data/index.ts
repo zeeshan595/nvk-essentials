@@ -1,4 +1,5 @@
-import { DataModel, DataController } from "./models/dataStructure";
+import DataController from "./models/dataController";
+import DataModel from "./models/dataModel";
 import TypeOfData from "./models/dataTypes";
 
 export default {

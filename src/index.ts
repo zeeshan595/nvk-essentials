@@ -1,5 +1,5 @@
 import GLSL from "./GLSL";
-import Data from "./DataHelper";
+import Data from "./Data";
 
 export {
   GLSL,
