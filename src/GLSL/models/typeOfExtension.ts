@@ -1,0 +1,19 @@
+enum TypeOfExtension {
+  vert = "vert",
+  tesc = "tesc",
+  tese = "tese",
+  geom = "geom",
+  frag = "frag",
+  comp = "comp",
+  mesh = "mesh",
+  task = "task",
+  rgen = "rgen",
+  rint = "rint",
+  rahit = "rahit",
+  rchit = "rchit",
+  rmiss = "rmiss",
+  rcall = "rcall",
+  glsl = "glsl",
+  hlsl = "hlsl"
+};
+export default TypeOfExtension;
