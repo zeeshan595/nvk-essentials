@@ -1,7 +1,7 @@
 import GLSL from "./GLSL";
-import DataHelper from "./DataHelper";
+import Data from "./DataHelper";
 
 export {
   GLSL,
-  DataHelper
+  Data
 }
