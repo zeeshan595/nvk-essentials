@@ -75,3 +75,25 @@ let {output, error} = GLSL.compileSync({
   extension: `frag`
 });
 ````
+
+
+### Array Buffer Helper
+
+This contains some helpful classes to let you easily transfer your data from/to array buffers.
+
+Examples:
+```ts
+const data = new DataController({
+  test: [23, 43, 435], //By default every number gets converted to Float32Array
+  test2: new DataModel([2, 2, 2], TypeOfData.Uint8) //Can specify the type using data model
+});
+
+const myAwesomeArrayBuffer = data.getArrayBuffer();
+data.setArrayBuffer(myAwesomeArrayBuffer);
+
+data.setData({
+  test: [23, 234, 34],
+  test2: new DataModel([2, 2, 2], TypeOfData.Uint8)
+});
+const myData = data.getData();
+```

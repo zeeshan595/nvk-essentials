@@ -1,6 +1,6 @@
 import TypeOfData, { getDataByteLength } from "./dataTypes";
 
-export class DataController {
+export class DataModel {
   private __type: TypeOfData;
   private __length: number;
   private __bytesLength: number;
@@ -146,9 +146,9 @@ export class DataController {
   }
 }
 
-export class DataStructure {
-  private __structure: any;
-  private __controllers: DataController[];
+export class DataController<T> {
+  private __structure: T;
+  private __controllers: DataModel[];
   private __totalBytesLength: number;
 
   private parseObject = (data: any) => {
@@ -157,15 +157,15 @@ export class DataStructure {
         throw `object key's cannot start with _`;
       }
       const entry: any = data[key];
-      if (entry instanceof DataController) {
+      if (entry instanceof DataModel) {
         this.__controllers.push(entry);
         this.__totalBytesLength += entry.getTotalBytesLength();
       } else if (Array.isArray(entry) && entry.length > 0 && typeof entry[0] === "number") {
-        const c = new DataController(entry as number[], TypeOfData.Float32);
+        const c = new DataModel(entry as number[], TypeOfData.Float32);
         this.__controllers.push(c)
         this.__totalBytesLength += c.getTotalBytesLength();
       } else if (typeof entry === "number") {
-        this.__controllers.push(new DataController([entry], TypeOfData.Float32))
+        this.__controllers.push(new DataModel([entry], TypeOfData.Float32))
         this.__totalBytesLength += 4;
       } else if (typeof entry === "object") {
         this.parseObject(entry);
@@ -180,7 +180,7 @@ export class DataStructure {
     Object.keys(structure).forEach(key => {
       const controller = this.__controllers[offset];
       const entry = structure[key];
-      if (entry instanceof DataController) {
+      if (entry instanceof DataModel) {
         data[key] = controller.getData();
         offset++;
       } else if (Array.isArray(entry) && entry.length > 0 && typeof entry[0] === "number") {
@@ -196,17 +196,17 @@ export class DataStructure {
     return data;
   }
 
-  constructor(data: any) {
+  constructor(data: T) {
     this.__structure = data;
     this.__controllers = [];
     this.__totalBytesLength = 0;
     this.parseObject(data);
   }
 
-  getData = (): any => {
+  getData = (): T => {
     return this.parsedFetch(this.__structure);
   }
-  setData = (data: any) => {
+  setData = (data: T) => {
     this.__structure = data;
     this.__controllers = [];
     this.__totalBytesLength = 0;
