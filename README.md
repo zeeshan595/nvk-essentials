@@ -12,7 +12,7 @@ Contains pre-built binaries of `glslangValidator`.
 
 Examples:
 ````ts
-import GLSL from "nvk-essentials";
+import { GLSL } from "nvk-essentials";
 `````
 
 #### GLSL.*version*
